@@ -6,9 +6,10 @@ function MechProjF(dt,T,l1s,r,l_2,thetai,k,m)
 % Acceleration functions as the Lagrangian equations of motion for this
 % particular system
 
-% Call MechProj(.05,30,4,5,4,pi/4,8,1)
+% Sample: call MechProj(.05,30,4,5,4,pi/4,8,1)
 
-N       = round(T/dt); % setting arrays for all our desired values
+% setting arrays for all our desired values
+N       = round(T/dt);
 t       = NaN(1,N);
 theta   = NaN(1,N);
 dtheta  = NaN(1,N);
@@ -19,13 +20,15 @@ l3      = NaN(1,N);
 z       = zeros(1,N);
 t2      = 0:.01:2*pi;
 
-n = 1; % initialization 
+% initialization
+n = 1;
 t(n)      = 0;
 theta(n)  = thetai;
 dtheta(n) = 0;
 l1(n)     = l1s;
 dl1(n)    = 0;
 
+% Runge-Kutta method employed here
 while n<N
     dl1m = dl1(n)+ddl1(l1(n),r,l2(n),theta(n),dtheta(n),k,m)*0.5*dt;
     l1m  = l1(n)+dl1(n)*0.5*dt;
@@ -42,8 +45,9 @@ while n<N
     theta(n+1)  = theta(n)+dthetam*dt;
     
     l3(n) = l1(n)+l2(n);
-    
-    figure(1) % plotting the motion within the while loop
+
+    % plotting the motion within the while loop to ensure real time change
+    figure(1)
     P = polar(t2,15*ones(size(t2))); % sets an invisible boundary (sets window of the polar plot)
     set(P,'Visible','off');
     view([-90,91]); % rotates the polar plot so the 0 degrees is straight down
